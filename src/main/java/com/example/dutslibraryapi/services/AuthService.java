@@ -34,8 +34,6 @@ public class AuthService {
     public Person register(Person person) {
 
         personValidator.registerValidate(person);
-
-
         person.setPassword(passwordEncoder.encode(person.getPassword()));
 
         if (person.getRole() == null) {
@@ -49,9 +47,7 @@ public class AuthService {
     public Person login(Person loggedPerson) {
         personValidator.loginValidate(loggedPerson);
 
-
         Person person = peopleService.findByEmail(loggedPerson.getEmail()).orElseThrow(() -> new PersonNotFoundException("User with this email not found!"));
-
 
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
                 loggedPerson.getEmail(), loggedPerson.getPassword());
