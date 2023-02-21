@@ -1,60 +1,65 @@
 package com.example.dutslibraryapi.services;
 
 
-import com.example.dutslibraryapi.dto.person.PersonDTO;
 import com.example.dutslibraryapi.dto.person.PersonInfoDTO;
 import com.example.dutslibraryapi.dto.person.PersonLoginDTO;
+import com.example.dutslibraryapi.exceptions.PersonNotFoundException;
 import com.example.dutslibraryapi.models.Person;
-import com.example.dutslibraryapi.repositories.PeopleRepository;
 import com.example.dutslibraryapi.util.validation.PersonValidator;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AuthService {
-    private final PeopleRepository peopleRepository;
+
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final UserMapperService userMapperService;
+    private final PeopleService peopleService;
+
     private final PersonValidator personValidator;
 
-    public AuthService(PeopleRepository peopleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, PeopleService peopleService, UserMapperService userMapperService, PersonValidator personValidator) {
-        this.peopleRepository = peopleRepository;
+    public AuthService(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, PeopleService peopleService, PersonValidator personValidator) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
-        this.userMapperService = userMapperService;
+        this.peopleService = peopleService;
         this.personValidator = personValidator;
     }
 
+
     @Transactional
-    public PersonInfoDTO register(PersonDTO personRegistration) {
+    public Person register(Person person) {
 
-        personValidator.validate(personRegistration);
+        personValidator.registerValidate(person);
 
-        Person person = userMapperService.convertPersonDTOToPerson(personRegistration);
+
         person.setPassword(passwordEncoder.encode(person.getPassword()));
 
         if (person.getRole() == null) {
             person.setRole("ROLE_USER");
         }
-        peopleRepository.save(person);
+        peopleService.save(person);
 
-        return userMapperService.convertToPersonInfoDTO(person);
+        return person;
     }
 
-    public PersonInfoDTO login(PersonLoginDTO personLoginDTO) {
-        personValidator.validate(personLoginDTO);
+    public Person login(Person loggedPerson) {
+        personValidator.loginValidate(loggedPerson);
+
+
+        Person person = peopleService.findByEmail(loggedPerson.getEmail()).orElseThrow(() -> new PersonNotFoundException("User with this email not found!"));
+
 
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
-                personLoginDTO.getEmail(), personLoginDTO.getPassword());
+                loggedPerson.getEmail(), loggedPerson.getPassword());
         authenticationManager.authenticate(authRequest);
-        return userMapperService.convertPersonLoginDTOToPersonInfoDTO(personLoginDTO);
+
+//        System.out.println(loggedPerson.getEmail() + " " + loggedPerson.getPassword());
+        return person;
     }
+
+
 }

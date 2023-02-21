@@ -42,7 +42,8 @@ public class PeopleController {
 
     @PostMapping("/create")
     public PersonInfoDTO create(@RequestBody @Valid PersonRegisteredByAdminDTO personRegisteredByAdminDTO) {
-        return registrationService.register(personRegisteredByAdminDTO);
+        Person person = userMapperService.convertPersonDTOToPerson(personRegisteredByAdminDTO);
+        return userMapperService.convertToPersonInfoDTO(registrationService.register(person));
     }
 
     @PatchMapping("/update/{id}")
