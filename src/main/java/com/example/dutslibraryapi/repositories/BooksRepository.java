@@ -1,4 +1,10 @@
 package com.example.dutslibraryapi.repositories;
 
-public interface BooksRepository {
+import com.example.dutslibraryapi.models.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BooksRepository extends JpaRepository<Book, Integer> {
+
 }
