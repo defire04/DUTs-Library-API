@@ -19,4 +19,8 @@ public class BooksService {
     public List<Book> findAll(){
         return booksRepository.findAll();
     }
+
+    public List<Book> findByTitleContains(String title){
+        return booksRepository.findByTitleContains(title);
+    }
 }
