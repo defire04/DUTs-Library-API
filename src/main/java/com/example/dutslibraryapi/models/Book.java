@@ -23,7 +23,7 @@ public class Book {
     private String documentSize;
 
     @Column(name = "year_of_publication")
-    private int yearOfPublication;
+    private String numberOfPages;
 
     @Column(name = "publishing_house")
     private String publishingHouse;
@@ -32,7 +32,7 @@ public class Book {
     private String country;
 
     @Column(name = "number_of_pages")
-    private int numberOfPages;
+    private String numberOfPages;
 
     @Column(name = "availability_in_the_library")
     private String availabilityInTheLibrary;
@@ -101,11 +101,11 @@ public class Book {
         this.documentSize = documentSize;
     }
 
-    public int getYearOfPublication() {
+    public String getYearOfPublication() {
         return yearOfPublication;
     }
 
-    public void setYearOfPublication(int yearOfPublication) {
+    public void setYearOfPublication(String yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
     }
 
@@ -125,11 +125,11 @@ public class Book {
         this.country = country;
     }
 
-    public int getNumberOfPages() {
+    public String getNumberOfPages() {
         return numberOfPages;
     }
 
-    public void setNumberOfPages(int numberOfPages) {
+    public void setNumberOfPages(String numberOfPages) {
         this.numberOfPages = numberOfPages;
     }
 
