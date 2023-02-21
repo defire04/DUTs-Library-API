@@ -23,9 +23,24 @@ public class BooksService {
     public List<Book> findByTitleContains(String title){
         return booksRepository.findByTitleContains(title);
     }
-    public List<Book> findBooksByAuthor(String author){
-        return booksRepository.findBooksByAuthor(author);
+
+    public List<Book> findBooksByAuthorContains(String author){
+        return booksRepository.findBooksByAuthorContains(author);
     }
 
+    public List<Book> findBooksByLanguage(String language) {
+        return booksRepository.findBooksByLanguage(language);
+    }
 
+    public List<Book> findBooksByClassification(String classification) {
+        return booksRepository.findBooksByClassification(classification);
+    }
+
+    public List<Book> findBooksBySubCategory(String subCategory) {
+        return booksRepository.findBooksBySubCategory(subCategory);
+    }
+
+    public List<Book> findBooksByGlobalCategory(String globalCategory){
+        return booksRepository.findBooksByGlobalCategory(globalCategory);
+    }
 }

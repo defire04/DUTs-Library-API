@@ -36,8 +36,26 @@ public class BooksController {
 
     @GetMapping("/author")
     public List<BookDTO> getBooksByAuthor(@RequestBody BookSearchDTO bookSearchDTO) {
-        return bookMapperService.convertBooksToBooksDTO(booksService.findBooksByAuthor(bookSearchDTO.getTitle()));
+        return bookMapperService.convertBooksToBooksDTO(booksService.findBooksByAuthorContains(bookSearchDTO.getAuthor()));
     }
 
+    @GetMapping("/language")
+    public List<BookDTO> getBooksByLanguage(@RequestBody BookSearchDTO bookSearchDTO) {
+        return bookMapperService.convertBooksToBooksDTO(booksService.findBooksByLanguage(bookSearchDTO.getLanguage()));
+    }
+    @GetMapping("/classification")
+    public List<BookDTO> getBooksByClassification(@RequestBody BookSearchDTO bookSearchDTO) {
+        return bookMapperService.convertBooksToBooksDTO(booksService.findBooksByClassification(bookSearchDTO.getClassification()));
+    }
+
+    @GetMapping("/subCategory")
+    public List<BookDTO> getBooksBySubCategory(@RequestBody BookSearchDTO bookSearchDTO) {
+        return bookMapperService.convertBooksToBooksDTO(booksService.findBooksBySubCategory(bookSearchDTO.getSubCategory()));
+    }
+
+    @GetMapping("/globalCategory")
+    public List<BookDTO> getBooksByGlobalCategory(@RequestBody BookSearchDTO bookSearchDTO) {
+        return bookMapperService.convertBooksToBooksDTO(booksService.findBooksByGlobalCategory(bookSearchDTO.getGlobalCategory()));
+    }
 
 }
