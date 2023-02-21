@@ -23,4 +23,9 @@ public class BooksService {
     public List<Book> findByTitleContains(String title){
         return booksRepository.findByTitleContains(title);
     }
+    public List<Book> findBooksByAuthor(String author){
+        return booksRepository.findBooksByAuthor(author);
+    }
+
+
 }

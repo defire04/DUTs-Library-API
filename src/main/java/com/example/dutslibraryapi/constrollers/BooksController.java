@@ -34,5 +34,10 @@ public class BooksController {
         return bookMapperService.convertBooksToBooksDTO(booksService.findByTitleContains(bookSearchDTO.getTitle()));
     }
 
+    @GetMapping("/author")
+    public List<BookDTO> getBooksByAuthor(@RequestBody BookSearchDTO bookSearchDTO) {
+        return bookMapperService.convertBooksToBooksDTO(booksService.findBooksByAuthor(bookSearchDTO.getTitle()));
+    }
+
 
 }
