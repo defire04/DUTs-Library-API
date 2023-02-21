@@ -23,7 +23,7 @@ public class Book {
     private String documentSize;
 
     @Column(name = "year_of_publication")
-    private String numberOfPages;
+    private String yearOfPublication;
 
     @Column(name = "publishing_house")
     private String publishingHouse;
